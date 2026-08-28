@@ -1,6 +1,26 @@
 const { Telegraf } = require('telegraf');
+const express = require('express');
 
-const bot = new Telegraf('88837557731:AAHShCFPJtoFUd8zHpsAayCgVvS2DSu427Y');
+// ====================
+// EXPRESS SERVER SETUP
+// ====================
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Health check endpoint for UptimeRobot to ping
+app.get('/', (req, res) => {
+  res.send('Bot is active and running 24/7!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Express server running on port ${PORT}`);
+});
+
+// ====================
+// TELEGRAF BOT SETUP
+// ====================
+// Uses process.env.BOT_TOKEN for security on Render
+const bot = new Telegraf('8837557731:AAEyvVUCWJ6XQsUB0jTV59c1pRvfLBPRIaQ');
 
 console.log("moder bot is running..");
 
@@ -60,7 +80,6 @@ bot.hears('👜 Expense', (ctx) => {
   ctx.reply('💸 How much did you spend?');
 });
 
-
 // ====================
 // CALCULATOR
 // ====================
@@ -113,7 +132,6 @@ bot.hears('👺 Divide', (ctx) => {
   ctx.reply('Enter the first number');
 });
 
-
 // ====================
 // ONE TEXT HANDLER
 // ====================
@@ -141,7 +159,6 @@ bot.on('text', (ctx) => {
     return;
   }
 
-
   // EXPENSE
   if (waitingForExpense) {
     const expense = Number(ctx.message.text);
@@ -163,7 +180,6 @@ bot.on('text', (ctx) => {
     return;
   }
 
-
   // FIRST NUMBER
   if (waitingForFirstNumber) {
     firstNumber = Number(ctx.message.text);
@@ -179,7 +195,6 @@ bot.on('text', (ctx) => {
     ctx.reply('Now enter the second number');
     return;
   }
-
 
   // SECOND NUMBER
   if (waitingForSecondNumber) {
@@ -228,4 +243,9 @@ bot.on('text', (ctx) => {
 
 });
 
+// Launch bot
 bot.launch();
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));

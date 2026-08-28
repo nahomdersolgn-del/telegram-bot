@@ -1,11 +1,17 @@
 {
-  "name": "my-telegram-bot",
+  "name": "telegram-bot",
   "version": "1.0.0",
+  "description": "24/7 Telegram bot hosted on Render",
   "main": "Bot.js",
   "scripts": {
     "start": "node Bot.js"
   },
   "dependencies": {
-    "node-telegram-bot-api": "^0.66.0"
+    "express": "^4.19.2",
+    "telegraf": "^4.16.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
+

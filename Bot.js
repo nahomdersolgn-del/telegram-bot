@@ -19,8 +19,9 @@ app.listen(PORT, () => {
 // ====================
 // TELEGRAF BOT SETUP
 // ====================
-// Uses process.env.BOT_TOKEN for security on Render
-const bot = new Telegraf('8837557731:AAEyvVUCWJ6XQsUB0jTV59c1pRvfLBPRIaQ');
+// Uses process.env.BOT_TOKEN for security on Rend
+const bot = new Telegraf(process.env.BOT_TOKEN);
+
 
 console.log("moder bot is running..");
 
